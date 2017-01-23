@@ -1,0 +1,45 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.std_logic_arith.all;
+
+
+
+entity registrador_A is 
+		port (
+			-- REGISTRADOR A
+			input: in std_logic;
+			rd_A, wr_A: in std_logic;
+			rst_A: in std_logic; 
+			clk: in std_logic;
+			q: inout std_logic; 
+			c: out std_logic
+		);
+		
+end entity;	
+architecture reg_temp of registrador_A is
+
+	signal output: std_logic := '0';
+	signal ctrl: std_logic_vector(1 downto 0):= "00";
+	
+begin
+	ctrl <= rd_A & wr_A;
+
+	process(clk) 
+	begin
+	
+		if(rising_edge(clk)) then
+				if(rst_A = '1') then
+					output <= '0';
+				end if;
+				case ctrl is
+					when "01" => output <= input;
+					when "10" => c <= output;
+					q <= output;
+					when others => output <= output;
+				end case;
+		end if;
+	end process;
+	--c <= output;
+	--q <= output; -- figure what to do with this later
+	
+end reg_temp; 	
