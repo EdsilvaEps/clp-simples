@@ -1,0 +1,55 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use IEEE.std_logic_arith.all;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity scan_delay is
+
+		port (
+					-- divisor de frequencia de 50MHz p/ 1Hz
+					start : in std_logic;
+					clk	: in std_logic;
+					sw  : in std_logic_vector(1 downto 0);
+					tout : buffer std_logic
+		);
+		
+end scan_delay;
+
+architecture delay or scan_delay is
+
+	constant second: integer := 25000000;
+	constant tenth_second: integer := 2500000;
+	constant ten_milisecond: integer := 250000;
+	constant milisecond: integer := 25000;
+	
+	variable scan_time: integer := second;
+	signal counter : integer range 0 to 25000000;
+	
+begin	
+
+	scan_time := second when sw = "00" else
+				    tenth_second when sw = "01" else
+					 ten_milisecond when sw = "10" else
+					 milisecond when sw = "11";
+					 
+	process(clk,start)
+	begin
+		if(start = '1') then
+			if(rising_edge(clk)) then
+				if	 (counter = scan_time) then
+							tout <= '1';
+							counter <= 0;
+					else
+							counter <= counter + 1;
+					end if;
+				end if;
+			end if;
+		elsif(start = '0') then
+			tout <= '0';
+			counter <= 0;
+		end if;
+	end process;
+	
+end delay;
+	
+	

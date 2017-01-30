@@ -11,7 +11,7 @@ entity divisor_freq_1hz is
 					
 		);
 		
-end divisor_freq_1hz;
+end entity divisor_freq_1hz;
 
 architecture div_freq of divisor_freq_1hz is
 

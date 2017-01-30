@@ -135,33 +135,6 @@ ON
 
 # end
 # entity
-divisor_freq_1hz
-# storage
-db|clp_simples.(7).cnf
-db|clp_simples.(7).cnf
-# logic_option {
-AUTO_RAM_RECOGNITION
-ON
-}
-# case_insensitive
-# source_file
-divisor_freq_1hz.vhd
-38e29259b63afc3b5b3a48d4460e850
-5
-# internal_option {
-HDL_INITIAL_FANOUT_LIMIT
-OFF
-AUTO_RESOURCE_SHARING
-OFF
-AUTO_RAM_RECOGNITION
-ON
-AUTO_ROM_RECOGNITION
-ON
-}
-# macro_sequence
-
-# end
-# entity
 altsyncram
 # storage
 db|clp_simples.(10).cnf
