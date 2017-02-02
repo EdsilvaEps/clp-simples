@@ -32,8 +32,12 @@ entity clp_simples is
 		E: BUFFER std_logic;-- can be OUT if an internai sigr.al is sreated 
 		DB: OUT std_logic_VECTOR(7 DOWNTO 0);
 	 
-		flag : buffer std_logic;
-		temp_keys : in std_logic_vector(3 downto 0)
+		I : buffer std_logic_vector(9 downto 0);
+		Q : buffer std_logic_vector(9 downto 0);
+		sw  : in std_logic_vector(1 downto 0);
+		rx  : buffer std_logic;
+		flag : buffer std_logic
+		
 		
 	);
 	-- entradas e saidas do sistema 
@@ -59,6 +63,11 @@ architecture clp of clp_simples is
 	-- REGISTRADOR TEMPORARIO
 	-- CONVERSOR ASCII
 	-- ESCRITA DE LCD (mod)
+	-- //terceira entrega//
+	-- PORTA_ES
+	-- CONTROLADOR MESTRE
+	-- GERADOR DE ATRASO
+	-- FF-D
 
 	-- declaracao dos componentes --
 	
@@ -130,7 +139,6 @@ architecture clp of clp_simples is
 			port(
 				-- 256X16 BITS RAM
 				data		: in std_logic_vector(15 downto 0);
-				i			: in std_logic_vector (3 downto 0);
 				addr_in	: in std_logic_vector (7 downto 0);
 				w_m		: in std_logic := '0';
 				r_m		: in std_logic := '0';
@@ -269,14 +277,58 @@ architecture clp of clp_simples is
 		);
 	end component;
 	
+	component porta_es 
+		port(
+		  -- PORTAS DE ENTRADA E SAIDA
+		  clk, RD_ES, WR_ES : in std_logic;
+		  I : buffer std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
+		  D : buffer std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  ADDR : in std_logic_vector(7 downto 0);
+		  Q : buffer std_logic_vector(9 downto 0) -- saidas do sistema 
+		 );
+	end component;
+	
+	component controlador_mestre
+		port(
+		  -- CONTROLADOR MESTRE
+		  clk, SOP, tout, EOP : in std_logic;
+		  RD_ES, WR_ES: out std_logic;
+		  RST_MAR, INC_MAR : out std_logic;
+		  WR_M, RD_M : out std_logic;
+		  START : out std_logic;
+		  RX : buffer std_logic -- this entry starts the writing of user input on mem
+		  );
+	end component;
+	
+	component scan_delay
+		port (
+				-- GERADOR DE ATRASO
+				start : in std_logic;
+				clk	: in std_logic;
+				sw  : in std_logic_vector(1 downto 0);
+				tout : buffer std_logic
+		);
+	end component;
+	
+	component D_FF 
+		port(
+		-- FLIP FLOP D
+      clk : in std_logic;      
+      sop_in, eop_in : in std_logic;
+      sop_out, eop_out : out std_logic
+		);
+	end component;
+	
 	-- 
 	
 	signal m_Continue : std_logic; -- Continue signal to button
 	signal m_SOP : std_logic; -- START OF PROGRAM signal to button
 	signal mclk : std_logic; -- clock de 1s
 	
-	signal display_enabled: std_logic; -- enable do display 7 seg
 	
+	
+	signal display_enabled: std_logic; -- enable do display 7 seg
+		
 	signal IR_BUS : std_logic_vector(15 downto 0) := "0000000000000000"; -- barramento de instruoes
 	signal P_BUS  : std_logic_vector(7 downto 0)  := "00000000";			-- barramento de enderaameno PC -> MAR
 	signal A_BUS  : std_logic_vector(7 downto 0)  := "00000000";			-- barramento de endereamento MAR -> RAM
@@ -316,6 +368,22 @@ architecture clp of clp_simples is
 	
 	signal MA_PROG : std_logic_vector(7 downto 0);
 	
+	signal RD_ES : std_logic := '0'; -- MASTERCTRL -> PES
+	signal WR_ES : std_logic := '0'; -- MASTERCTRL -> PES
+	signal START : std_logic := '0'; -- MASTERCTRL -> DELAY
+	signal TOUT : std_logic := '0';	-- DELAY -> MASTERCTRL
+	
+	signal din_SOP : std_logic;
+	signal dout_SOP : std_logic;
+	signal din_EOP : std_logic;
+	signal dout_EOP : std_logic;
+	
+	signal M_W_M_ctrl : std_logic := '0'; 
+	signal M_R_M_ctrl : std_logic := '0';
+	
+	signal M_W_M_master : std_logic := '0'; 
+	signal M_R_M_master : std_logic := '0';
+	
 	
 begin
   
@@ -323,6 +391,9 @@ begin
 
 	m_Continue <= not(m_Continue_btn); -- botoes do fpga sao ativos em sinal zero, portanto devemos reverter as entradas
 	m_SOP <= not(m_SOP_btn);
+	
+	M_W_M <= (M_W_M_ctrl) OR (M_W_M_master);
+	M_R_M <= (M_R_M_ctrl) OR (M_R_M_master);
 	
 	-- OBS: m_Continue esta temporariamente alocado como reset interno do sistema
 
@@ -350,13 +421,12 @@ begin
 	MAR1: registrador_enderecamento port map(IR_BUS_MAR, P_BUS, M_T_PC, M_T_IR, M_Z_MAR, M_I_MAR, mclk, A_BUS);
 	IR1: 	registrador_instrucao port map (D_BUS, M_T_BUS, mclk, IR_BUS);
 	RAM1: single_port_ram port map (data    => DATA,
-											  i 		 => temp_keys,
 											  addr_in => A_BUS, 
 											  w_m 	 => M_W_M, 
 											  r_m		 => M_R_M, 
 											  clk		 => mclk, 
 											  q 		 => D_BUS); -- o barramento de entrada eh o mesmo de saida na RAM 
-	CTRL_S: controlador_escravo port map(mclk, m_SOP, m_Continue, IR_BUS_CTRL, m_EOP, M_I_PC, M_Z_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_A, M_W_A, M_Z_A, M_R_M, M_W_M, M_W_T);
+	CTRL_S: controlador_escravo port map(mclk, dout_SOP, m_Continue, IR_BUS_CTRL, m_EOP, M_I_PC, M_Z_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_A, M_W_A, M_Z_A, M_R_M_ctrl, M_W_M_ctrl, M_W_T);
 	
 	--LCD: LCD_FPGA port map(mclk_in, RS, RW, E, DB, IR_BUS, P_BUS);
 	
@@ -382,6 +452,45 @@ begin
 										  clk 	 => mclk,
 										  A		 => flag
 	); 
+	
+	PES1 : porta_es port map(clk => mclk,
+									 RD_ES => RD_ES,
+									 WR_ES => WR_ES,
+									 I => I,
+									 D => ES_BUS,
+									 ADDR => A_BUS,
+									 Q => Q
+	);
+	
+	DELAY1 : scan_delay port map(start => START,
+										  clk => mclk,
+										  sw => sw,
+										  tout => TOUT
+	);
+	
+	FFD1 : D_FF port map(clk => mclk,
+								sop_in => m_SOP,
+								eop_in => m_EOP,
+								sop_out => dout_SOP,
+								eop_out => dout_EOP
+	);
+	
+	MASTERCTRL : controlador_mestre port map(clk => mclk,
+														  SOP => m_SOP, -- if need arises, make SOP reach the controller before being transmitted to the ff
+														  tout => TOUT,
+														  EOP => dout_EOP,
+														  RD_ES => RD_ES,
+														  WR_ES => WR_ES,
+														  RST_MAR => M_Z_MAR,
+														  INC_MAR => M_I_MAR,
+														  WR_M => M_W_M_master,
+														  RD_M => M_R_M_master,
+														  START => START,
+														  RX => rx
+	);
+														  
+	
+	
 	
 	
 	LCD: LCD_FPGA port map(fsd_Clk => mclk_in, 

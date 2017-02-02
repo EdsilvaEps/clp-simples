@@ -43,6 +43,19 @@ fsd_est.P30 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 fsd_est.P31 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 fsd_est.returnHome 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 
+State Machine - |clp_simples|controlador_mestre:MASTERCTRL|est
+Name est.e9 est.e8 est.e7 est.e6 est.e5 est.e4 est.e3 est.e2 est.e1 est.e0 
+est.e0 0 0 0 0 0 0 0 0 0 0 
+est.e1 0 0 0 0 0 0 0 0 1 1 
+est.e2 0 0 0 0 0 0 0 1 0 1 
+est.e3 0 0 0 0 0 0 1 0 0 1 
+est.e4 0 0 0 0 0 1 0 0 0 1 
+est.e5 0 0 0 0 1 0 0 0 0 1 
+est.e6 0 0 0 1 0 0 0 0 0 1 
+est.e7 0 0 1 0 0 0 0 0 0 1 
+est.e8 0 1 0 0 0 0 0 0 0 1 
+est.e9 1 0 0 0 0 0 0 0 0 1 
+
 State Machine - |clp_simples|controlador_escravo:CTRL_S|est
 Name est.e8 est.e7 est.e6 est.e5 est.e4 est.e3 est.e2 est.e1 est.e0 
 est.e0 0 0 0 0 0 0 0 0 0 

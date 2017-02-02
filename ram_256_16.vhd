@@ -7,7 +7,6 @@ entity single_port_ram is
 	(
 		-- 256X16 BITS RAM
 		data	: in std_logic_vector(15 downto 0) := "0000000000000000";
-		i			: in std_logic_vector (3 downto 0);
 		addr_in	: in std_logic_vector (7 downto 0);
 		w_m		: in std_logic := '0';
 		r_m		: in std_logic := '0';

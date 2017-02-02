@@ -52,7 +52,20 @@ begin
 			      when "01" => if(counter > 9) then
 											counter <= 0;
 									 else 
-										   Q(counter) <= D(0); -- it might be useful to make a WHEN condition with the addresses received
+											case ADDR is
+												when "00001010" => Q(0)  <= D(0);
+												when "00001011" => Q(1)  <= D(0);
+												when "00001100" => Q(2)  <= D(0);
+												when "00001101" => Q(3)  <= D(0);
+												when "00001110" => Q(4)  <= D(0);
+												when "00001111" => Q(5)  <= D(0);
+											   when "00010000" => Q(6)  <= D(0);
+												when "00010001" => Q(7)  <= D(0);
+												when "00010010" => Q(8)  <= D(0);
+												when "00010011" => Q(9)  <= D(0);
+												when others => Q(0) <= '0';
+											end case;
+												--Q(counter) <= D(0); -- it might be useful to make a WHEN condition with the addresses received
 											counter <= counter + 1;
 									 end if;
 					when others => D <= (others => 'Z'); 

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for clp_simples
-Sun Jan 29 19:25:02 2017
+Wed Feb  1 22:52:59 2017
 Quartus II Version 11.0 Build 208 07/03/2011 Service Pack 1 SJ Web Edition
 
 
@@ -13,15 +13,15 @@ Quartus II Version 11.0 Build 208 07/03/2011 Service Pack 1 SJ Web Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. Analysis & Synthesis RAM Summary
-  9. State Machine - |clp_simples|LCD_FPGA:LCD|fsd_est
+  8. State Machine - |clp_simples|LCD_FPGA:LCD|fsd_est
+  9. State Machine - |clp_simples|controlador_mestre:MASTERCTRL|est
  10. State Machine - |clp_simples|controlador_escravo:CTRL_S|est
  11. Registers Removed During Synthesis
- 12. General Register Statistics
- 13. Inverted Register Statistics
+ 12. Removed Registers Triggering Further Register Optimizations
+ 13. General Register Statistics
  14. Registers Added for RAM Pass-Through Logic
  15. Multiplexer Restructuring Statistics (Restructuring Performed)
- 16. Source assignments for single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_1um1:auto_generated
+ 16. Source assignments for single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated
  17. Parameter Settings for User Entity Instance: LCD_FPGA:LCD
  18. Parameter Settings for Inferred Entity Instance: single_port_ram:RAM1|altsyncram:ram_rtl_0
  19. altsyncram Parameter Settings by Entity Instance
@@ -29,10 +29,9 @@ Quartus II Version 11.0 Build 208 07/03/2011 Service Pack 1 SJ Web Edition
  21. Port Connectivity Checks: "chip_seletor:CS1"
  22. Port Connectivity Checks: "ULA:ULA1"
  23. Port Connectivity Checks: "controlador_escravo:CTRL_S"
- 24. Port Connectivity Checks: "registrador_enderecamento:MAR1"
- 25. Port Connectivity Checks: "display_7seg:DP_7"
- 26. Elapsed Time Per Partition
- 27. Analysis & Synthesis Messages
+ 24. Port Connectivity Checks: "display_7seg:DP_7"
+ 25. Elapsed Time Per Partition
+ 26. Analysis & Synthesis Messages
 
 
 
@@ -58,18 +57,18 @@ applicable agreement for further details.
 +------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                       ;
 +------------------------------------+-----------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun Jan 29 19:25:02 2017         ;
+; Analysis & Synthesis Status        ; Successful - Wed Feb  1 22:52:59 2017         ;
 ; Quartus II Version                 ; 11.0 Build 208 07/03/2011 SP 1 SJ Web Edition ;
 ; Revision Name                      ; clp_simples                                   ;
 ; Top-level Entity Name              ; clp_simples                                   ;
 ; Family                             ; Cyclone IV E                                  ;
-; Total logic elements               ; 353                                           ;
-;     Total combinational functions  ; 259                                           ;
-;     Dedicated logic registers      ; 188                                           ;
-; Total registers                    ; 188                                           ;
-; Total pins                         ; 54                                            ;
+; Total logic elements               ; 193                                           ;
+;     Total combinational functions  ; 146                                           ;
+;     Dedicated logic registers      ; 109                                           ;
+; Total registers                    ; 109                                           ;
+; Total pins                         ; 73                                            ;
 ; Total virtual pins                 ; 0                                             ;
-; Total memory bits                  ; 4,096                                         ;
+; Total memory bits                  ; 0                                             ;
 ; Embedded Multiplier 9-bit elements ; 0                                             ;
 ; Total PLLs                         ; 0                                             ;
 +------------------------------------+-----------------------------------------------+
@@ -189,6 +188,10 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ; conversor_ascii.vhd                                  ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/conversor_ascii.vhd                                  ;
 ; chip_seletor1.vhd                                    ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/chip_seletor1.vhd                                    ;
 ; chip_seletor2.vhd                                    ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/chip_seletor2.vhd                                    ;
+; controlador_mestre.vhd                               ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/controlador_mestre.vhd                               ;
+; porta_es.vhd                                         ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/porta_es.vhd                                         ;
+; scan_delay.vhd                                       ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/scan_delay.vhd                                       ;
+; d_flipflop.vhd                                       ; yes             ; User VHDL File                                        ; /home/edson/Documents/Eletronica_Digital/CLP_simples/d_flipflop.vhd                                       ;
 ; altsyncram.tdf                                       ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/altsyncram.tdf                                 ;
 ; stratix_ram_block.inc                                ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/stratix_ram_block.inc                          ;
 ; lpm_mux.inc                                          ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/lpm_mux.inc                                    ;
@@ -198,7 +201,7 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ; altrom.inc                                           ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/altrom.inc                                     ;
 ; altram.inc                                           ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/altram.inc                                     ;
 ; altdpram.inc                                         ; yes             ; Megafunction                                          ; /home/edson/altera/11.0sp1/quartus/libraries/megafunctions/altdpram.inc                                   ;
-; db/altsyncram_1um1.tdf                               ; yes             ; Auto-Generated Megafunction                           ; /home/edson/Documents/Eletronica_Digital/CLP_simples/db/altsyncram_1um1.tdf                               ;
+; db/altsyncram_fjm1.tdf                               ; yes             ; Auto-Generated Megafunction                           ; /home/edson/Documents/Eletronica_Digital/CLP_simples/db/altsyncram_fjm1.tdf                               ;
 ; db/clp_simples.ram0_single_port_ram_7cbe84f1.hdl.mif ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; /home/edson/Documents/Eletronica_Digital/CLP_simples/db/clp_simples.ram0_single_port_ram_7cbe84f1.hdl.mif ;
 +------------------------------------------------------+-----------------+-------------------------------------------------------+-----------------------------------------------------------------------------------------------------------+
 
@@ -208,61 +211,45 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+---------------+
 ; Resource                                    ; Usage         ;
 +---------------------------------------------+---------------+
-; Estimated Total logic elements              ; 353           ;
+; Estimated Total logic elements              ; 193           ;
 ;                                             ;               ;
-; Total combinational functions               ; 259           ;
+; Total combinational functions               ; 146           ;
 ; Logic element usage by number of LUT inputs ;               ;
-;     -- 4 input functions                    ; 148           ;
-;     -- 3 input functions                    ; 35            ;
+;     -- 4 input functions                    ; 50            ;
+;     -- 3 input functions                    ; 20            ;
 ;     -- <=2 input functions                  ; 76            ;
 ;                                             ;               ;
 ; Logic elements by mode                      ;               ;
-;     -- normal mode                          ; 213           ;
+;     -- normal mode                          ; 100           ;
 ;     -- arithmetic mode                      ; 46            ;
 ;                                             ;               ;
-; Total registers                             ; 188           ;
-;     -- Dedicated logic registers            ; 188           ;
+; Total registers                             ; 109           ;
+;     -- Dedicated logic registers            ; 109           ;
 ;     -- I/O registers                        ; 0             ;
 ;                                             ;               ;
-; I/O pins                                    ; 54            ;
-; Total memory bits                           ; 4096          ;
+; I/O pins                                    ; 73            ;
 ; Maximum fan-out node                        ; mclk_in~input ;
-; Maximum fan-out                             ; 162           ;
-; Total fan-out                               ; 1619          ;
-; Average fan-out                             ; 2.84          ;
+; Maximum fan-out                             ; 67            ;
+; Total fan-out                               ; 735           ;
+; Average fan-out                             ; 1.83          ;
 +---------------------------------------------+---------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                          ;
-+-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------+--------------+
-; Compilation Hierarchy Node                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                   ; Library Name ;
-+-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------+--------------+
-; |clp_simples                              ; 259 (1)           ; 188 (0)      ; 4096        ; 0            ; 0       ; 0         ; 54   ; 0            ; |clp_simples                                                                          ;              ;
-;    |LCD_FPGA:LCD|                         ; 100 (100)         ; 58 (58)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|LCD_FPGA:LCD                                                             ;              ;
-;    |chip_seletor2:CS2|                    ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|chip_seletor2:CS2                                                        ;              ;
-;    |contador_programa:PC1|                ; 34 (34)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|contador_programa:PC1                                                    ;              ;
-;    |controlador_escravo:CTRL_S|           ; 15 (15)           ; 17 (17)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|controlador_escravo:CTRL_S                                               ;              ;
-;    |conversor_ascii:CONV|                 ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|conversor_ascii:CONV                                                     ;              ;
-;    |display_7seg:DP_7|                    ; 46 (46)           ; 28 (28)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|display_7seg:DP_7                                                        ;              ;
-;    |registrador_A:REG_A1|                 ; 5 (5)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|registrador_A:REG_A1                                                     ;              ;
-;    |registrador_enderecamento:MAR1|       ; 16 (16)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|registrador_enderecamento:MAR1                                           ;              ;
-;    |registrador_instrucao:IR1|            ; 0 (0)             ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|registrador_instrucao:IR1                                                ;              ;
-;    |registrador_temporario:REG_T1|        ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|registrador_temporario:REG_T1                                            ;              ;
-;    |single_port_ram:RAM1|                 ; 24 (24)           ; 49 (49)      ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|single_port_ram:RAM1                                                     ;              ;
-;       |altsyncram:ram_rtl_0|              ; 0 (0)             ; 0 (0)        ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|single_port_ram:RAM1|altsyncram:ram_rtl_0                                ;              ;
-;          |altsyncram_1um1:auto_generated| ; 0 (0)             ; 0 (0)        ; 4096        ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_1um1:auto_generated ;              ;
-+-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+---------------------------------------------------------------------------------------+--------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                  ;
++---------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------+--------------+
+; Compilation Hierarchy Node      ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                     ; Library Name ;
++---------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------+--------------+
+; |clp_simples                    ; 146 (0)           ; 109 (0)      ; 0           ; 0            ; 0       ; 0         ; 73   ; 0            ; |clp_simples                            ;              ;
+;    |D_FF:FFD1|                  ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|D_FF:FFD1                  ;              ;
+;    |LCD_FPGA:LCD|               ; 62 (62)           ; 58 (58)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|LCD_FPGA:LCD               ;              ;
+;    |chip_seletor2:CS2|          ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|chip_seletor2:CS2          ;              ;
+;    |contador_programa:PC1|      ; 25 (25)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|contador_programa:PC1      ;              ;
+;    |controlador_escravo:CTRL_S| ; 7 (7)             ; 13 (13)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|controlador_escravo:CTRL_S ;              ;
+;    |conversor_ascii:CONV|       ; 4 (4)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|conversor_ascii:CONV       ;              ;
+;    |display_7seg:DP_7|          ; 46 (46)           ; 28 (28)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |clp_simples|display_7seg:DP_7          ;              ;
++---------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis RAM Summary                                                                                                                                                                                                        ;
-+-------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------------------------------------------------------+
-; Name                                                                                ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size ; MIF                                                  ;
-+-------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------------------------------------------------------+
-; single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_1um1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 256          ; 16           ; 256          ; 16           ; 4096 ; db/clp_simples.ram0_single_port_ram_7cbe84f1.hdl.mif ;
-+-------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------------------------------------------------------+
 
 
 Encoding Type:  One-Hot
@@ -316,6 +303,25 @@ Encoding Type:  One-Hot
 
 
 Encoding Type:  One-Hot
++--------------------------------------------------------------------------------------------------+
+; State Machine - |clp_simples|controlador_mestre:MASTERCTRL|est                                   ;
++--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
+; Name   ; est.e9 ; est.e8 ; est.e7 ; est.e6 ; est.e5 ; est.e4 ; est.e3 ; est.e2 ; est.e1 ; est.e0 ;
++--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
+; est.e0 ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ;
+; est.e1 ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ; 1      ;
+; est.e2 ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ; 0      ; 1      ;
+; est.e3 ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ; 0      ; 0      ; 1      ;
+; est.e4 ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ; 0      ; 0      ; 0      ; 1      ;
+; est.e5 ; 0      ; 0      ; 0      ; 0      ; 1      ; 0      ; 0      ; 0      ; 0      ; 1      ;
+; est.e6 ; 0      ; 0      ; 0      ; 1      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ;
+; est.e7 ; 0      ; 0      ; 1      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ;
+; est.e8 ; 0      ; 1      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ;
+; est.e9 ; 1      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 0      ; 1      ;
++--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
+
+
+Encoding Type:  One-Hot
 +-----------------------------------------------------------------------------------------+
 ; State Machine - |clp_simples|controlador_escravo:CTRL_S|est                             ;
 +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
@@ -333,19 +339,135 @@ Encoding Type:  One-Hot
 +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                                                                    ;
-+----------------------------------------------------------------------------------------+----------------------------------------------+
-; Register name                                                                          ; Reason for Removal                           ;
-+----------------------------------------------------------------------------------------+----------------------------------------------+
-; chip_seletor:CS1|out_array[1..15]                                                      ; Merged with chip_seletor:CS1|out_array[0]    ;
-; registrador_A:REG_A1|q                                                                 ; Merged with registrador_A:REG_A1|c           ;
-; controlador_escravo:CTRL_S|C[5]                                                        ; Merged with controlador_escravo:CTRL_S|C[4]  ;
-; controlador_escravo:CTRL_S|C[7]                                                        ; Merged with controlador_escravo:CTRL_S|C[10] ;
-; chip_seletor:CS1|out_array[0]                                                          ; Stuck at GND due to stuck port data_in       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47] ; Stuck at GND due to stuck port data_in       ;
-; Total Number of Removed Registers = 35                                                 ;                                              ;
-+----------------------------------------------------------------------------------------+----------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                                                      ;
++----------------------------------------------------------------------------------------+------------------------------------------------+
+; Register name                                                                          ; Reason for Removal                             ;
++----------------------------------------------------------------------------------------+------------------------------------------------+
+; controlador_mestre:MASTERCTRL|C[3]                                                     ; Stuck at GND due to stuck port data_in         ;
+; porta_es:PES1|D[0]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[1]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[2]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[3]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[4]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[5]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[6]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[7]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[8]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[9]~en                                                                  ; Lost fanout                                    ;
+; porta_es:PES1|D[10]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[11]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[12]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[13]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[14]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[15]~en                                                                 ; Lost fanout                                    ;
+; porta_es:PES1|D[14]~reg0                                                               ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[13]~reg0                                                               ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[12]~reg0                                                               ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[11]~reg0                                                               ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[10]~reg0                                                               ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[9]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[8]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[7]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[6]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[5]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[4]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[3]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[2]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[1]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; porta_es:PES1|D[0]~reg0                                                                ; Merged with porta_es:PES1|D[15]~reg0           ;
+; controlador_mestre:MASTERCTRL|C[2]                                                     ; Merged with controlador_mestre:MASTERCTRL|C[0] ;
+; chip_seletor:CS1|out_array[1..15]                                                      ; Merged with chip_seletor:CS1|out_array[0]      ;
+; registrador_A:REG_A1|q                                                                 ; Merged with registrador_A:REG_A1|c             ;
+; controlador_escravo:CTRL_S|C[5]                                                        ; Merged with controlador_escravo:CTRL_S|C[4]    ;
+; controlador_escravo:CTRL_S|C[7]                                                        ; Merged with controlador_escravo:CTRL_S|C[10]   ;
+; porta_es:PES1|D[15]~reg0                                                               ; Stuck at GND due to stuck port data_in         ;
+; chip_seletor:CS1|out_array[0]                                                          ; Stuck at GND due to stuck port data_in         ;
+; single_port_ram:RAM1|ram_rtl_0_bypass[17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47] ; Stuck at GND due to stuck port data_in         ;
+; porta_es:PES1|Q[1..9]                                                                  ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e1                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e0                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|C[0,1,5,6]                                               ; Stuck at VCC due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e2                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|C[4]                                                     ; Stuck at VCC due to stuck port data_in         ;
+; single_port_ram:RAM1|q[0]                                                              ; Stuck at GND due to stuck port clock_enable    ;
+; porta_es:PES1|Q[0]                                                                     ; Stuck at GND due to stuck port clock_enable    ;
+; single_port_ram:RAM1|q[1..15]                                                          ; Stuck at GND due to stuck port clock_enable    ;
+; porta_es:PES1|counter[0..3]                                                            ; Stuck at GND due to stuck port clock_enable    ;
+; scan_delay:DELAY1|tout                                                                 ; Stuck at VCC due to stuck port data_in         ;
+; registrador_instrucao:IR1|IR[0..15]                                                    ; Stuck at GND due to stuck port data_in         ;
+; registrador_enderecamento:MAR1|out_array[0..7]                                         ; Stuck at GND due to stuck port data_in         ;
+; controlador_escravo:CTRL_S|est.e8                                                      ; Stuck at GND due to stuck port data_in         ;
+; single_port_ram:RAM1|ram_rtl_0_bypass[1..16]                                           ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e3                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_escravo:CTRL_S|C[0]                                                        ; Stuck at GND due to stuck port data_in         ;
+; D_FF:FFD1|eop_out                                                                      ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e5                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e6                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e7                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e8                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|counter[0..4]                                            ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e4                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_mestre:MASTERCTRL|est.e9                                                   ; Stuck at GND due to stuck port data_in         ;
+; registrador_temporario:REG_T1|output                                                   ; Stuck at GND due to stuck port data_in         ;
+; controlador_escravo:CTRL_S|C[8]                                                        ; Lost fanout                                    ;
+; registrador_A:REG_A1|output                                                            ; Stuck at GND due to stuck port data_in         ;
+; registrador_A:REG_A1|c                                                                 ; Stuck at GND due to stuck port data_in         ;
+; controlador_escravo:CTRL_S|C[9]                                                        ; Lost fanout                                    ;
+; Total Number of Removed Registers = 168                                                ;                                                ;
++----------------------------------------------------------------------------------------+------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                                                   ;
++---------------------------------------------+---------------------------+-------------------------------------------------------------------------------------+
+; Register name                               ; Reason for Removal        ; Registers Removed due to This Register                                              ;
++---------------------------------------------+---------------------------+-------------------------------------------------------------------------------------+
+; controlador_mestre:MASTERCTRL|C[3]          ; Stuck at GND              ; single_port_ram:RAM1|q[0], single_port_ram:RAM1|q[15], single_port_ram:RAM1|q[14],  ;
+;                                             ; due to stuck port data_in ; single_port_ram:RAM1|q[13], single_port_ram:RAM1|q[12], single_port_ram:RAM1|q[11], ;
+;                                             ;                           ; single_port_ram:RAM1|q[10], single_port_ram:RAM1|q[9], single_port_ram:RAM1|q[8],   ;
+;                                             ;                           ; single_port_ram:RAM1|q[7], single_port_ram:RAM1|q[5], single_port_ram:RAM1|q[4],    ;
+;                                             ;                           ; single_port_ram:RAM1|q[3], single_port_ram:RAM1|q[2], single_port_ram:RAM1|q[1],    ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[15], registrador_instrucao:IR1|IR[14],                 ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[13], registrador_instrucao:IR1|IR[12],                 ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[11], registrador_instrucao:IR1|IR[10],                 ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[9], registrador_instrucao:IR1|IR[8],                   ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[7], registrador_instrucao:IR1|IR[5],                   ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[4], registrador_instrucao:IR1|IR[3],                   ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[2], registrador_instrucao:IR1|IR[1],                   ;
+;                                             ;                           ; registrador_instrucao:IR1|IR[0], controlador_escravo:CTRL_S|est.e8,                 ;
+;                                             ;                           ; controlador_escravo:CTRL_S|C[0], D_FF:FFD1|eop_out, controlador_escravo:CTRL_S|C[8] ;
+; controlador_mestre:MASTERCTRL|C[0]          ; Stuck at VCC              ; porta_es:PES1|counter[3], porta_es:PES1|counter[1], porta_es:PES1|counter[0]        ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; single_port_ram:RAM1|ram_rtl_0_bypass[29]   ; Stuck at GND              ; single_port_ram:RAM1|q[6], registrador_instrucao:IR1|IR[6]                          ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; controlador_mestre:MASTERCTRL|C[4]          ; Stuck at VCC              ; scan_delay:DELAY1|tout, controlador_mestre:MASTERCTRL|est.e9                        ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; registrador_enderecamento:MAR1|out_array[7] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[15],                                          ;
+;                                             ; due to stuck port data_in ; single_port_ram:RAM1|ram_rtl_0_bypass[16]                                           ;
+; registrador_enderecamento:MAR1|out_array[6] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[13],                                          ;
+;                                             ; due to stuck port data_in ; single_port_ram:RAM1|ram_rtl_0_bypass[14]                                           ;
+; registrador_enderecamento:MAR1|out_array[5] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[11],                                          ;
+;                                             ; due to stuck port data_in ; single_port_ram:RAM1|ram_rtl_0_bypass[12]                                           ;
+; registrador_enderecamento:MAR1|out_array[4] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[9],                                           ;
+;                                             ; due to stuck port data_in ; single_port_ram:RAM1|ram_rtl_0_bypass[10]                                           ;
+; registrador_enderecamento:MAR1|out_array[3] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[7], single_port_ram:RAM1|ram_rtl_0_bypass[8]  ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; registrador_enderecamento:MAR1|out_array[2] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[5], single_port_ram:RAM1|ram_rtl_0_bypass[6]  ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; registrador_enderecamento:MAR1|out_array[1] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[3], single_port_ram:RAM1|ram_rtl_0_bypass[4]  ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; registrador_enderecamento:MAR1|out_array[0] ; Stuck at GND              ; single_port_ram:RAM1|ram_rtl_0_bypass[1], single_port_ram:RAM1|ram_rtl_0_bypass[2]  ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; registrador_A:REG_A1|output                 ; Stuck at GND              ; registrador_A:REG_A1|c, controlador_escravo:CTRL_S|C[9]                             ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; porta_es:PES1|D[15]~reg0                    ; Stuck at GND              ; chip_seletor:CS1|out_array[0]                                                       ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; controlador_mestre:MASTERCTRL|est.e5        ; Stuck at GND              ; controlador_mestre:MASTERCTRL|est.e6                                                ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
+; controlador_mestre:MASTERCTRL|est.e8        ; Stuck at GND              ; controlador_mestre:MASTERCTRL|est.e4                                                ;
+;                                             ; due to stuck port data_in ;                                                                                     ;
++---------------------------------------------+---------------------------+-------------------------------------------------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -353,39 +475,14 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 188   ;
+; Total registers                              ; 109   ;
 ; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Synchronous Load   ; 6     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 32    ;
+; Number of registers using Clock Enable       ; 0     ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
-
-
-+-----------------------------------------------------+
-; Inverted Register Statistics                        ;
-+-------------------------------------------+---------+
-; Inverted Register                         ; Fan out ;
-+-------------------------------------------+---------+
-; single_port_ram:RAM1|ram_rtl_0_bypass[18] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[24] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[22] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[20] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[40] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[38] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[36] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[34] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[32] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[30] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[28] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[26] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[48] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[46] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[44] ; 1       ;
-; single_port_ram:RAM1|ram_rtl_0_bypass[42] ; 1       ;
-; Total number of inverted registers = 16   ;         ;
-+-------------------------------------------+---------+
 
 
 +----------------------------------------------------------------------------+
@@ -445,20 +542,25 @@ Encoding Type:  One-Hot
 +-------------------------------------------+--------------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                  ;
-+--------------------+-----------+---------------+----------------------+------------------------+---------------------------------------------------+----------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered                                        ; Example Multiplexer Output ;
-+--------------------+-----------+---------------+----------------------+------------------------+---------------------------------------------------+----------------------------+
-; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; |clp_simples|contador_programa:PC1|p[2]           ;                            ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; |clp_simples|contador_programa:PC1|p[0]           ;                            ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; |clp_simples|registrador_enderecamento:MAR1|Mux7  ;                            ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; |clp_simples|controlador_escravo:CTRL_S|Selector7 ;                            ;
-+--------------------+-----------+---------------+----------------------+------------------------+---------------------------------------------------+----------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                      ;
++--------------------+-----------+---------------+----------------------+------------------------+-------------------------------------------------------+----------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered                                            ; Example Multiplexer Output ;
++--------------------+-----------+---------------+----------------------+------------------------+-------------------------------------------------------+----------------------------+
+; 5:1                ; 5 bits    ; 15 LEs        ; 10 LEs               ; 5 LEs                  ; |clp_simples|contador_programa:PC1|p[3]               ;                            ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; |clp_simples|contador_programa:PC1|p[7]               ;                            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; |clp_simples|porta_es:PES1|counter[2]                 ;                            ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 5 LEs                ; 15 LEs                 ; |clp_simples|controlador_mestre:MASTERCTRL|counter[1] ;                            ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; |clp_simples|scan_delay:DELAY1|scan_time[21]          ;                            ;
+; 16:1               ; 8 bits    ; 80 LEs        ; 16 LEs               ; 64 LEs                 ; |clp_simples|registrador_enderecamento:MAR1|Mux1      ;                            ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; |clp_simples|controlador_escravo:CTRL_S|Selector8     ;                            ;
+; 14:1               ; 8 bits    ; 72 LEs        ; 40 LEs               ; 32 LEs                 ; |clp_simples|controlador_mestre:MASTERCTRL|Selector4  ;                            ;
+; 15:1               ; 2 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; |clp_simples|controlador_mestre:MASTERCTRL|Selector2  ;                            ;
++--------------------+-----------+---------------+----------------------+------------------------+-------------------------------------------------------+----------------------------+
 
 
 +-------------------------------------------------------------------------------------------------+
-; Source assignments for single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_1um1:auto_generated ;
+; Source assignments for single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated ;
 +---------------------------------+--------------------+------+-----------------------------------+
 ; Assignment                      ; Value              ; From ; To                                ;
 +---------------------------------+--------------------+------+-----------------------------------+
@@ -531,7 +633,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; ENABLE_ECC                         ; FALSE                                                ; Untyped        ;
 ; WIDTH_ECCSTATUS                    ; 3                                                    ; Untyped        ;
 ; DEVICE_FAMILY                      ; Cyclone IV E                                         ; Untyped        ;
-; CBXI_PARAMETER                     ; altsyncram_1um1                                      ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_fjm1                                      ; Untyped        ;
 +------------------------------------+------------------------------------------------------+----------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -575,7 +677,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 +------+-------+----------+--------------------+
 ; Port ; Type  ; Severity ; Details            ;
 +------+-------+----------+--------------------+
-; es   ; Input ; Info     ; Stuck at GND       ;
 ; r_es ; Input ; Info     ; Stuck at GND       ;
 +------+-------+----------+--------------------+
 
@@ -597,16 +698,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; z_pc ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
 ; z_a  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
 +------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+------------------------------------------------------------+
-; Port Connectivity Checks: "registrador_enderecamento:MAR1" ;
-+-------+-------+----------+---------------------------------+
-; Port  ; Type  ; Severity ; Details                         ;
-+-------+-------+----------+---------------------------------+
-; z_mar ; Input ; Info     ; Stuck at GND                    ;
-; i_mar ; Input ; Info     ; Stuck at GND                    ;
-+-------+-------+----------+---------------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------+
@@ -633,7 +724,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II Analysis & Synthesis
     Info: Version 11.0 Build 208 07/03/2011 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun Jan 29 19:24:57 2017
+    Info: Processing started: Wed Feb  1 22:52:55 2017
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off clp_simples -c clp_simples
 Warning: Parallel compilation is not licensed and has been disabled
 Info: Found 2 design units, including 1 entities, in source file clp_simples.vhd
@@ -697,14 +788,11 @@ Info: Found 2 design units, including 1 entities, in source file d_flipflop.vhd
     Info: Found design unit 1: D_FF-Behavioral
     Info: Found entity 1: D_FF
 Info: Elaborating entity "clp_simples" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(278): object "display_enabled" assigned a value but never read
-Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(284): used explicit default value for signal "ES_BUS" because signal was never assigned a value
-Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(286): object "M_Z_PC" assigned a value but never read
-Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(286): used explicit default value for signal "M_Z_MAR" because signal was never assigned a value
-Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(286): used explicit default value for signal "M_I_MAR" because signal was never assigned a value
-Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(287): object "M_Z_A" assigned a value but never read
-Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(288): used explicit default value for signal "M_R_ES" because signal was never assigned a value
-Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(295): used explicit default value for signal "M_REG_A_RFEED" because signal was never assigned a value
+Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(330): object "display_enabled" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(338): object "M_Z_PC" assigned a value but never read
+Warning (10036): Verilog HDL or VHDL warning at clp_simples.vhd(339): object "M_Z_A" assigned a value but never read
+Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(340): used explicit default value for signal "M_R_ES" because signal was never assigned a value
+Warning (10540): VHDL Signal Declaration warning at clp_simples.vhd(347): used explicit default value for signal "M_REG_A_RFEED" because signal was never assigned a value
 Warning (10034): Output port "m_IR" at clp_simples.vhd(16) has no driver
 Info: Elaborating entity "display_7seg" for hierarchy "display_7seg:DP_7"
 Warning (10492): VHDL Process Statement warning at display_7seg.vhd(48): signal "contador" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
@@ -719,6 +807,12 @@ Info: Elaborating entity "registrador_A" for hierarchy "registrador_A:REG_A1"
 Info: Elaborating entity "registrador_temporario" for hierarchy "registrador_temporario:REG_T1"
 Info: Elaborating entity "chip_seletor" for hierarchy "chip_seletor:CS1"
 Info: Elaborating entity "chip_seletor2" for hierarchy "chip_seletor2:CS2"
+Info: Elaborating entity "porta_es" for hierarchy "porta_es:PES1"
+Warning (10030): Net "I" at porta_es.vhd(7) has no driver or initial value, using a default initial value '0'
+Info: Elaborating entity "scan_delay" for hierarchy "scan_delay:DELAY1"
+Info: Elaborating entity "D_FF" for hierarchy "D_FF:FFD1"
+Info: Elaborating entity "controlador_mestre" for hierarchy "controlador_mestre:MASTERCTRL"
+Warning (10030): Net "RX" at controlador_mestre.vhd(11) has no driver or initial value, using a default initial value '0'
 Info: Elaborating entity "LCD_FPGA" for hierarchy "LCD_FPGA:LCD"
 Warning (10036): Verilog HDL or VHDL warning at escrita_LCD.vhd(49): object "fsd_RAM" assigned a value but never read
 Warning (10492): VHDL Process Statement warning at escrita_LCD.vhd(54): signal "fsd_EnderecoEscritaY" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
@@ -824,6 +918,23 @@ Info (10041): Inferred latch for "data_ir_out_1[4]" at conversor_ascii.vhd(46)
 Info (10041): Inferred latch for "data_ir_out_1[5]" at conversor_ascii.vhd(46)
 Info (10041): Inferred latch for "data_ir_out_1[6]" at conversor_ascii.vhd(46)
 Info (10041): Inferred latch for "data_ir_out_1[7]" at conversor_ascii.vhd(46)
+Warning: Tri-state node(s) do not directly drive top-level pin(s)
+    Warning: Converted tri-state buffer "porta_es:PES1|D[0]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[1]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[2]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[3]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[4]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[5]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[6]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[7]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[8]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[9]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[10]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[11]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[12]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[13]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[14]" feeding internal logic into a wire
+    Warning: Converted tri-state buffer "porta_es:PES1|D[15]" feeding internal logic into a wire
 Warning: Inferred RAM node "single_port_ram:RAM1|ram_rtl_0" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Info: Inferred 1 megafunctions from design logic
     Info: Inferred altsyncram megafunction from the following design logic: "single_port_ram:RAM1|ram_rtl_0" 
@@ -861,9 +972,28 @@ Info: Instantiated megafunction "single_port_ram:RAM1|altsyncram:ram_rtl_0" with
     Info: Parameter "WRCONTROL_ACLR_A" = "NONE"
     Info: Parameter "INIT_FILE" = "db/clp_simples.ram0_single_port_ram_7cbe84f1.hdl.mif"
     Info: Parameter "READ_DURING_WRITE_MODE_MIXED_PORTS" = "OLD_DATA"
-Info: Found 1 design units, including 1 entities, in source file db/altsyncram_1um1.tdf
-    Info: Found entity 1: altsyncram_1um1
+Info: Found 1 design units, including 1 entities, in source file db/altsyncram_fjm1.tdf
+    Info: Found entity 1: altsyncram_fjm1
+Warning: Synthesized away the following node(s):
+    Warning: Synthesized away the following RAM node(s):
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a0"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a1"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a2"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a3"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a4"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a5"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a6"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a7"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a8"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a9"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a10"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a11"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a12"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a13"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a14"
+        Warning (14320): Synthesized away node "single_port_ram:RAM1|altsyncram:ram_rtl_0|altsyncram_fjm1:auto_generated|ram_block1a15"
 Warning: Output pins are stuck at VCC or GND
+    Warning (13410): Pin "m_EOP" is stuck at GND
     Warning (13410): Pin "m_IR[0]" is stuck at GND
     Warning (13410): Pin "m_IR[1]" is stuck at GND
     Warning (13410): Pin "m_IR[2]" is stuck at GND
@@ -882,23 +1012,60 @@ Warning: Output pins are stuck at VCC or GND
     Warning (13410): Pin "m_IR[15]" is stuck at GND
     Warning (13410): Pin "display_in[5]" is stuck at VCC
     Warning (13410): Pin "RW" is stuck at GND
+    Warning (13410): Pin "I[0]" is stuck at GND
+    Warning (13410): Pin "I[1]" is stuck at GND
+    Warning (13410): Pin "I[2]" is stuck at GND
+    Warning (13410): Pin "I[3]" is stuck at GND
+    Warning (13410): Pin "I[4]" is stuck at GND
+    Warning (13410): Pin "I[5]" is stuck at GND
+    Warning (13410): Pin "I[6]" is stuck at GND
+    Warning (13410): Pin "I[7]" is stuck at GND
+    Warning (13410): Pin "I[8]" is stuck at GND
+    Warning (13410): Pin "I[9]" is stuck at GND
+    Warning (13410): Pin "Q[0]" is stuck at GND
+    Warning (13410): Pin "Q[1]" is stuck at GND
+    Warning (13410): Pin "Q[2]" is stuck at GND
+    Warning (13410): Pin "Q[3]" is stuck at GND
+    Warning (13410): Pin "Q[4]" is stuck at GND
+    Warning (13410): Pin "Q[5]" is stuck at GND
+    Warning (13410): Pin "Q[6]" is stuck at GND
+    Warning (13410): Pin "Q[7]" is stuck at GND
+    Warning (13410): Pin "Q[8]" is stuck at GND
+    Warning (13410): Pin "Q[9]" is stuck at GND
+    Warning (13410): Pin "rx" is stuck at GND
 Info: Timing-Driven Synthesis is running
+Info: 18 registers lost all their fanouts during netlist optimizations. The first 18 are displayed below.
+    Info: Register "porta_es:PES1|D[0]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[1]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[2]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[3]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[4]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[5]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[6]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[7]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[8]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[9]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[10]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[11]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[12]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[13]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[14]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "porta_es:PES1|D[15]~en" lost all its fanouts during netlist optimizations.
+    Info: Register "controlador_escravo:CTRL_S|C[8]" lost all its fanouts during netlist optimizations.
+    Info: Register "controlador_escravo:CTRL_S|C[9]" lost all its fanouts during netlist optimizations.
 Info: Generating hard_block partition "hard_block:auto_generated_inst"
-Warning: Design contains 5 input pin(s) that do not drive logic
+Warning: Design contains 3 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "m_Continue_btn"
-    Warning (15610): No output dependent on input pin "temp_keys[0]"
-    Warning (15610): No output dependent on input pin "temp_keys[1]"
-    Warning (15610): No output dependent on input pin "temp_keys[2]"
-    Warning (15610): No output dependent on input pin "temp_keys[3]"
-Info: Implemented 444 device resources after synthesis - the final resource count might be different
-    Info: Implemented 9 input pins
-    Info: Implemented 45 output pins
-    Info: Implemented 374 logic cells
-    Info: Implemented 16 RAM segments
-Info: Quartus II Analysis & Synthesis was successful. 0 errors, 53 warnings
-    Info: Peak virtual memory: 292 megabytes
-    Info: Processing ended: Sun Jan 29 19:25:02 2017
-    Info: Elapsed time: 00:00:05
+    Warning (15610): No output dependent on input pin "sw[0]"
+    Warning (15610): No output dependent on input pin "sw[1]"
+Info: Implemented 277 device resources after synthesis - the final resource count might be different
+    Info: Implemented 7 input pins
+    Info: Implemented 66 output pins
+    Info: Implemented 204 logic cells
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 107 warnings
+    Info: Peak virtual memory: 294 megabytes
+    Info: Processing ended: Wed Feb  1 22:52:59 2017
+    Info: Elapsed time: 00:00:04
     Info: Total CPU time (on all processors): 00:00:03
 
 
