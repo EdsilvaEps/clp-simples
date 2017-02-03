@@ -32,10 +32,10 @@ entity clp_simples is
 		E: BUFFER std_logic;-- can be OUT if an internai sigr.al is sreated 
 		DB: OUT std_logic_VECTOR(7 DOWNTO 0);
 	 
-		I : buffer std_logic_vector(9 downto 0);
+		m_I : buffer std_logic_vector(9 downto 0);
 		Q : buffer std_logic_vector(9 downto 0);
 		sw  : in std_logic_vector(1 downto 0);
-		rx  : buffer std_logic;
+		m_rx  : in std_logic;
 		flag : buffer std_logic
 		
 		
@@ -282,7 +282,8 @@ architecture clp of clp_simples is
 		  -- PORTAS DE ENTRADA E SAIDA
 		  clk, RD_ES, WR_ES : in std_logic;
 		  I : buffer std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
-		  D : buffer std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  D : out std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  DATA_IN : in std_logic_vector(15 downto 0); -- entrada de dados (n estamos usando tri-state)
 		  ADDR : in std_logic_vector(7 downto 0);
 		  Q : buffer std_logic_vector(9 downto 0) -- saidas do sistema 
 		 );
@@ -296,7 +297,7 @@ architecture clp of clp_simples is
 		  RST_MAR, INC_MAR : out std_logic;
 		  WR_M, RD_M : out std_logic;
 		  START : out std_logic;
-		  RX : buffer std_logic -- this entry starts the writing of user input on mem
+		  RX : in std_logic -- this entry starts the writing of user input on mem
 		  );
 	end component;
 	
@@ -337,7 +338,6 @@ architecture clp of clp_simples is
 	signal DATA	  : std_logic_vector(15 downto 0) := "0000000000000000";	-- CHIP SELETOR -> RAM
 	signal M_Z_PC, M_I_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_M, M_W_M, M_Z_MAR, M_I_MAR : std_logic := '0'; -- sinais de controle
 	signal M_R_A, M_W_A, M_Z_A : std_logic := '0'; -- sinais de controle (nao utilizados no modulo de busca)
-	signal M_R_ES : std_logic := '0';
 	
 	signal IR_BUS_CTRL : std_logic_vector(7 downto 0); -- LSB 8 bits de IR_BUS (CTRL & ULA)
 	signal IR_BUS_MAR : std_logic_vector(7 downto 0); 	-- MSB 8 bits de IR_BUS (MAR)
@@ -368,15 +368,15 @@ architecture clp of clp_simples is
 	
 	signal MA_PROG : std_logic_vector(7 downto 0);
 	
-	signal RD_ES : std_logic := '0'; -- MASTERCTRL -> PES
-	signal WR_ES : std_logic := '0'; -- MASTERCTRL -> PES
-	signal START : std_logic := '0'; -- MASTERCTRL -> DELAY
-	signal TOUT : std_logic := '0';	-- DELAY -> MASTERCTRL
+	signal M_RD_ES : std_logic := '0'; -- MASTERCTRL -> PES
+	signal M_WR_ES : std_logic := '0'; -- MASTERCTRL -> PES
+	signal M_START : std_logic := '0'; -- MASTERCTRL -> DELAY
+	signal M_TOUT : std_logic := '0';	-- DELAY -> MASTERCTRL
 	
-	signal din_SOP : std_logic;
-	signal dout_SOP : std_logic;
-	signal din_EOP : std_logic;
-	signal dout_EOP : std_logic;
+	--signal din_SOP : std_logic;
+	--signal dout_SOP : std_logic;
+	--signal din_EOP : std_logic;
+	--signal dout_EOP : std_logic;
 	
 	signal M_W_M_ctrl : std_logic := '0'; 
 	signal M_R_M_ctrl : std_logic := '0';
@@ -384,13 +384,17 @@ architecture clp of clp_simples is
 	signal M_W_M_master : std_logic := '0'; 
 	signal M_R_M_master : std_logic := '0';
 	
+	signal test : std_logic_vector(5 downto 0):= "000000";
+	signal mrx_btn : std_logic := '0';
 	
 begin
   
   
-
+	
 	m_Continue <= not(m_Continue_btn); -- botoes do fpga sao ativos em sinal zero, portanto devemos reverter as entradas
 	m_SOP <= not(m_SOP_btn);
+	mrx_btn <= m_rx;
+	
 	
 	M_W_M <= (M_W_M_ctrl) OR (M_W_M_master);
 	M_R_M <= (M_R_M_ctrl) OR (M_R_M_master);
@@ -406,44 +410,106 @@ begin
 	m_RM		<= M_R_M;
       
   clk_watch <= mclk;
+  
+  
 	--flag <= D_BUS(0);
 	
 	-- associando e interconectando os outputs e inputs dos componentes a outros componentes ou a saida/entrada do sistema
 	--DBC1: Debounce port map (mclk_in, m_SOP_btn, m_SOP); -- debounce do SOP (m_SOP estavel)
 	--DBC2: Debounce port map (mclk_in, m_Continue_btn , m_Continue); -- debounce do Continue (m_Continue estavel)
-	
 	--DIV:  divisor_freq_1hz port map(mclk_in, m_SOP , mclk); -- divisor de frequencia(mclk - clock de 1s)
+	
+	
 	mclk <= mclk_in;  
+	
+	
 	DP_7: display_7seg port map(mclk_in, m_prog, display_enabled, ktodos, display_in); 
 	
+	
+	
 	PC1:  contador_programa port map (m_prog, m_EOP, M_I_PC, mclk, P_BUS); 
-	                                        -- M_Z_PC was used instead of m_SOP
-	MAR1: registrador_enderecamento port map(IR_BUS_MAR, P_BUS, M_T_PC, M_T_IR, M_Z_MAR, M_I_MAR, mclk, A_BUS);
+	
+	
+	MAR1: registrador_enderecamento port map(IR   => IR_BUS_MAR, 
+														  P 	 => P_BUS, 
+														  t_pc => M_T_PC,
+														  t_ir => M_T_IR, 
+														  z_mar=> M_Z_MAR,
+														  i_mar=> M_I_MAR, 
+														  clk  => mclk,
+														  A	 => A_BUS
+	);
+	
+	
+	
 	IR1: 	registrador_instrucao port map (D_BUS, M_T_BUS, mclk, IR_BUS);
+	
+	
 	RAM1: single_port_ram port map (data    => DATA,
 											  addr_in => A_BUS, 
 											  w_m 	 => M_W_M, 
 											  r_m		 => M_R_M, 
 											  clk		 => mclk, 
 											  q 		 => D_BUS); -- o barramento de entrada eh o mesmo de saida na RAM 
-	CTRL_S: controlador_escravo port map(mclk, dout_SOP, m_Continue, IR_BUS_CTRL, m_EOP, M_I_PC, M_Z_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_A, M_W_A, M_Z_A, M_R_M_ctrl, M_W_M_ctrl, M_W_T);
+											  
+											  
+	--CTRL_S: controlador_escravo port map(mclk, m_SOP, m_Continue, IR_BUS_CTRL, m_EOP, M_I_PC, M_Z_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_A, M_W_A, M_Z_A, M_R_M_ctrl, M_W_M_ctrl, M_W_T);
 	
-	--LCD: LCD_FPGA port map(mclk_in, RS, RW, E, DB, IR_BUS, P_BUS);
 	
+	CTRL_S: controlador_escravo port map(clk => mclk,
+													 SOP => m_SOP,
+													 Continue => m_Continue,
+													 IR => IR_BUS_CTRL,
+													 EOP => m_EOP,
+													 I_PC => M_I_PC,
+													 Z_PC => M_Z_PC,
+													 T_PC => M_T_PC,
+													 T_IR => M_T_IR,
+													 T_BUS => M_T_BUS,
+													 R_A => M_R_A,
+													 W_A => M_W_A,
+													 Z_A => M_Z_A,
+													 R_M => M_R_M_ctrl,
+													 W_M => M_W_M_ctrl,
+													 W_T => M_W_T
+	);
+	
+	MASTERCTRL : controlador_mestre port map(clk => mclk,
+														  SOP => m_SOP, -- if need arises, make SOP reach the controller before being transmitted to the ff
+														  tout => M_TOUT,
+														  EOP => m_EOP,
+														  RD_ES => M_RD_ES,
+														  WR_ES => M_WR_ES,
+														  RST_MAR => M_Z_MAR,
+														  INC_MAR => M_I_MAR,
+														  WR_M => M_W_M_master,
+														  RD_M => M_R_M_master,
+														  START => M_START,
+														  RX => mrx_btn
+	);
+													 
+													 
+		
 	-- //segunda entrega// DEAKTIVOITU TESTAUKSEEN
 	ULA1 : ULA port map(M_REG_T, M_REG_A_RFEED, IR_BUS_CTRL, M_REG_A);
+	
+	
 	REG_A1 : registrador_A port map(M_REG_A, M_R_A, M_W_A, m_SOP, mclk, Q_REG_A, M_REG_A_OUT);
-	-- 27/12: duvidas acerca do funcionamento de D_BUS(0) como entrada buffer de REG_A
+	
+	
 	REG_T1 :	registrador_temporario port map(D_BUS(0), M_W_T, m_SOP, mclk, M_REG_T);
-	-- 27/12: verificar se o bit D_BUS(0) esta correto como input de REG_T
+	
+	
 	
 	CS1 : chip_seletor port map(REG_A	=> Q_REG_A,
 										  ES	   => ES_BUS,
 		                      	  r_a		=> M_R_A,
-										  r_es   => M_R_ES,
+										  r_es   => M_RD_ES,
 			                       clk    => mclk,
 			                       A		=> DATA
 	);
+	
+	
 	
 	CS2 : chip_seletor2 port map(REG_A	 => Q_REG_A,
 										  D_BUS   => D_BUS(0),
@@ -453,41 +519,32 @@ begin
 										  A		 => flag
 	); 
 	
+	
+	
 	PES1 : porta_es port map(clk => mclk,
-									 RD_ES => RD_ES,
-									 WR_ES => WR_ES,
-									 I => I,
-									 D => ES_BUS,
+									 RD_ES => M_RD_ES,
+									 WR_ES => M_WR_ES,
+									 I => m_I,
+									 D => ES_BUS,	
+									 DATA_IN => D_BUS,
 									 ADDR => A_BUS,
 									 Q => Q
 	);
 	
-	DELAY1 : scan_delay port map(start => START,
-										  clk => mclk,
-										  sw => sw,
-										  tout => TOUT
+	DELAY1 : scan_delay port map(start => M_START,
+									  clk => mclk,
+									  sw => sw,
+									  tout => M_TOUT
 	);
 	
-	FFD1 : D_FF port map(clk => mclk,
-								sop_in => m_SOP,
-								eop_in => m_EOP,
-								sop_out => dout_SOP,
-								eop_out => dout_EOP
-	);
+	--FFD1 : D_FF port map(clk => mclk,
+	--							sop_in => m_SOP,
+	--							eop_in => m_EOP,
+	--							sop_out => dout_SOP,
+	--							eop_out => dout_EOP
+	--);
 	
-	MASTERCTRL : controlador_mestre port map(clk => mclk,
-														  SOP => m_SOP, -- if need arises, make SOP reach the controller before being transmitted to the ff
-														  tout => TOUT,
-														  EOP => dout_EOP,
-														  RD_ES => RD_ES,
-														  WR_ES => WR_ES,
-														  RST_MAR => M_Z_MAR,
-														  INC_MAR => M_I_MAR,
-														  WR_M => M_W_M_master,
-														  RD_M => M_R_M_master,
-														  START => START,
-														  RX => rx
-	);
+	
 														  
 	
 	

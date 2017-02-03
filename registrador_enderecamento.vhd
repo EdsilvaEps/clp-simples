@@ -36,7 +36,7 @@ begin
 				when "0100" => out_array <= IR;
 				when "0010" => out_array <= "00000000";
 				when "0001" => out_array <= out_array + "1";
-				when others => out_array <= out_array;
+				when others => out_array <= "00000000";
 			end case;
 		end if;
 

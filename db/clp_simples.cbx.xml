@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <LOG_ROOT>
 	<PROJECT NAME="clp_simples">
-		<CBX_INST_ENTRY INSTANCE_NAME="|clp_simples|single_port_ram:RAM1|altsyncram:ram_rtl_0" CBX_FILE_NAME="altsyncram_fjm1.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|clp_simples|single_port_ram:RAM1|altsyncram:ram_rtl_0" CBX_FILE_NAME="altsyncram_1um1.tdf"/>
 	</PROJECT>
 </LOG_ROOT>

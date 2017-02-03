@@ -1,16 +1,16 @@
-Fitter Status : Successful - Fri Jan 20 02:08:57 2017
+Fitter Status : Successful - Thu Feb  2 23:53:44 2017
 Quartus II Version : 11.0 Build 208 07/03/2011 SP 1 SJ Web Edition
 Revision Name : clp_simples
 Top-level Entity Name : clp_simples
 Family : Cyclone IV E
 Device : EP4CE6E22C8
 Timing Models : Final
-Total logic elements : 317 / 6,272 ( 5 % )
-    Total combinational functions : 294 / 6,272 ( 5 % )
-    Dedicated logic registers : 162 / 6,272 ( 3 % )
-Total registers : 162
-Total pins : 54 / 92 ( 59 % )
+Total logic elements : 301 / 6,272 ( 5 % )
+    Total combinational functions : 276 / 6,272 ( 4 % )
+    Dedicated logic registers : 188 / 6,272 ( 3 % )
+Total registers : 188
+Total pins : 73 / 92 ( 79 % )
 Total virtual pins : 0
-Total memory bits : 0 / 276,480 ( 0 % )
+Total memory bits : 4,096 / 276,480 ( 1 % )
 Embedded Multiplier 9-bit elements : 0 / 30 ( 0 % )
 Total PLLs : 0 / 2 ( 0 % )

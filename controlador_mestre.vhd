@@ -8,7 +8,7 @@ entity controlador_mestre is
 		  RST_MAR, INC_MAR : out std_logic;
 		  WR_M, RD_M : out std_logic;
 		  START : out std_logic;
-		  RX : buffer std_logic -- this entry starts the writing of user input on mem
+		  RX : in std_logic -- this entry starts the writing of user input on mem
 		  );
 		  
 end entity;

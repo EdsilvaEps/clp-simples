@@ -5,7 +5,8 @@ entity porta_es is
 
 	port(clk, RD_ES, WR_ES : in std_logic;
 		  I : buffer std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
-		  D : buffer std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  D : out std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  DATA_IN : in std_logic_vector(15 downto 0); -- entrada de dados (n estamos usando tri-state)
 		  ADDR : in std_logic_vector(7 downto 0);
 		  Q : buffer std_logic_vector(9 downto 0) -- saidas do sistema
 		  
@@ -53,22 +54,22 @@ begin
 											counter <= 0;
 									 else 
 											case ADDR is
-												when "00001010" => Q(0)  <= D(0);
-												when "00001011" => Q(1)  <= D(0);
-												when "00001100" => Q(2)  <= D(0);
-												when "00001101" => Q(3)  <= D(0);
-												when "00001110" => Q(4)  <= D(0);
-												when "00001111" => Q(5)  <= D(0);
-											   when "00010000" => Q(6)  <= D(0);
-												when "00010001" => Q(7)  <= D(0);
-												when "00010010" => Q(8)  <= D(0);
-												when "00010011" => Q(9)  <= D(0);
+												when "00001010" => Q(0)  <= DATA_IN(0);
+												when "00001011" => Q(1)  <= DATA_IN(0);
+												when "00001100" => Q(2)  <= DATA_IN(0);
+												when "00001101" => Q(3)  <= DATA_IN(0);
+												when "00001110" => Q(4)  <= DATA_IN(0);
+												when "00001111" => Q(5)  <= DATA_IN(0);
+											   when "00010000" => Q(6)  <= DATA_IN(0);
+												when "00010001" => Q(7)  <= DATA_IN(0);
+												when "00010010" => Q(8)  <= DATA_IN(0);
+												when "00010011" => Q(9)  <= DATA_IN(0);
 												when others => Q(0) <= '0';
 											end case;
 												--Q(counter) <= D(0); -- it might be useful to make a WHEN condition with the addresses received
 											counter <= counter + 1;
 									 end if;
-					when others => D <= (others => 'Z'); 
+					when others => D <= (others => '0'); 
 				end case;
 			end if;
 		end process;
