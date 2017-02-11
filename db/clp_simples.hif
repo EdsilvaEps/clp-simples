@@ -1041,46 +1041,6 @@ chip_seletor2:CS2
 
 # end
 # entity
-chip_seletor
-# storage
-db|clp_simples.(18).cnf
-db|clp_simples.(18).cnf
-# logic_option {
-AUTO_RAM_RECOGNITION
-ON
-}
-# case_insensitive
-# source_file
-chip_seletor1.vhd
-b526d243023fa1822fff95220b923e2
-5
-# internal_option {
-HDL_INITIAL_FANOUT_LIMIT
-OFF
-AUTO_RESOURCE_SHARING
-OFF
-AUTO_RAM_RECOGNITION
-ON
-AUTO_ROM_RECOGNITION
-ON
-}
-# user_parameter {
- constraint(es)
-15 downto 0
-PARAMETER_STRING
-USR
- constraint(a)
-15 downto 0
-PARAMETER_STRING
-USR
-}
-# hierarchies {
-chip_seletor:CS1
-}
-# macro_sequence
-
-# end
-# entity
 ULA
 # storage
 db|clp_simples.(12).cnf
@@ -1786,50 +1746,6 @@ USR
 }
 # hierarchies {
 registrador_instrucao:IR1
-}
-# macro_sequence
-
-# end
-# entity
-single_port_ram
-# storage
-db|clp_simples.(4).cnf
-db|clp_simples.(4).cnf
-# logic_option {
-AUTO_RAM_RECOGNITION
-ON
-}
-# case_insensitive
-# source_file
-ram_256_16.vhd
-7e948c448589d42d8db43a94c7476a
-5
-# internal_option {
-HDL_INITIAL_FANOUT_LIMIT
-OFF
-AUTO_RESOURCE_SHARING
-OFF
-AUTO_RAM_RECOGNITION
-ON
-AUTO_ROM_RECOGNITION
-ON
-}
-# user_parameter {
- constraint(data)
-15 downto 0
-PARAMETER_STRING
-USR
- constraint(addr_in)
-7 downto 0
-PARAMETER_STRING
-USR
- constraint(q)
-15 downto 0
-PARAMETER_STRING
-USR
-}
-# hierarchies {
-single_port_ram:RAM1
 }
 # macro_sequence
 
@@ -2701,36 +2617,6 @@ stratix_ram_block.inc
 
 # end
 # entity
-controlador_mestre
-# storage
-db|clp_simples.(23).cnf
-db|clp_simples.(23).cnf
-# logic_option {
-AUTO_RAM_RECOGNITION
-ON
-}
-# case_insensitive
-# source_file
-controlador_mestre.vhd
-5846fa713d5dc930d947f24d14fca7ec
-5
-# internal_option {
-HDL_INITIAL_FANOUT_LIMIT
-OFF
-AUTO_RESOURCE_SHARING
-OFF
-AUTO_RAM_RECOGNITION
-ON
-AUTO_ROM_RECOGNITION
-ON
-}
-# hierarchies {
-controlador_mestre:MASTERCTRL
-}
-# macro_sequence
-
-# end
-# entity
 altsyncram
 # storage
 db|clp_simples.(27).cnf
@@ -3120,7 +3006,47 @@ d4e3a69a331d3a99d3281790d99a1ebd
 
 # end
 # entity
-porta_es
+chip_seletor
+# storage
+db|clp_simples.(18).cnf
+db|clp_simples.(18).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
+chip_seletor1.vhd
+3b72bc8dc5cfd22db891819b40bee85c
+5
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# user_parameter {
+ constraint(es)
+15 downto 0
+PARAMETER_STRING
+USR
+ constraint(a)
+15 downto 0
+PARAMETER_STRING
+USR
+}
+# hierarchies {
+chip_seletor:CS1
+}
+# macro_sequence
+
+# end
+# entity
+controlador_mestre
 # storage
 db|clp_simples.(7).cnf
 db|clp_simples.(7).cnf
@@ -3130,8 +3056,38 @@ ON
 }
 # case_insensitive
 # source_file
+controlador_mestre.vhd
+5846fa713d5dc930d947f24d14fca7ec
+5
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# hierarchies {
+controlador_mestre:MASTERCTRL
+}
+# macro_sequence
+
+# end
+# entity
+porta_es
+# storage
+db|clp_simples.(23).cnf
+db|clp_simples.(23).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
 porta_es.vhd
-efea0637027a5dbd15fadc036c4e2cb
+f6de931b502f36751bb4acc2ec8969b
 5
 # internal_option {
 HDL_INITIAL_FANOUT_LIMIT
@@ -3172,6 +3128,36 @@ porta_es:PES1
 
 # end
 # entity
+clp_simples
+# storage
+db|clp_simples.(0).cnf
+db|clp_simples.(0).cnf
+# logic_option {
+AUTO_RAM_RECOGNITION
+ON
+}
+# case_insensitive
+# source_file
+clp_simples.vhd
+7985e52fd9a3e77f8aa85b642b176d4
+5
+# internal_option {
+HDL_INITIAL_FANOUT_LIMIT
+OFF
+AUTO_RESOURCE_SHARING
+OFF
+AUTO_RAM_RECOGNITION
+ON
+AUTO_ROM_RECOGNITION
+ON
+}
+# hierarchies {
+|
+}
+# macro_sequence
+
+# end
+# entity
 registrador_enderecamento
 # storage
 db|clp_simples.(2).cnf
@@ -3183,7 +3169,7 @@ ON
 # case_insensitive
 # source_file
 registrador_enderecamento.vhd
-d5203a8ac0f78319e8d8017847bfd
+4f358794246cc5557ac2f8fa428b823
 5
 # internal_option {
 HDL_INITIAL_FANOUT_LIMIT
@@ -3216,18 +3202,18 @@ registrador_enderecamento:MAR1
 
 # end
 # entity
-clp_simples
+single_port_ram
 # storage
-db|clp_simples.(0).cnf
-db|clp_simples.(0).cnf
+db|clp_simples.(4).cnf
+db|clp_simples.(4).cnf
 # logic_option {
 AUTO_RAM_RECOGNITION
 ON
 }
 # case_insensitive
 # source_file
-clp_simples.vhd
-342539525ef25531d24b1d2891f7f3a
+ram_256_16.vhd
+7e948c448589d42d8db43a94c7476a
 5
 # internal_option {
 HDL_INITIAL_FANOUT_LIMIT
@@ -3239,8 +3225,22 @@ ON
 AUTO_ROM_RECOGNITION
 ON
 }
+# user_parameter {
+ constraint(data)
+15 downto 0
+PARAMETER_STRING
+USR
+ constraint(addr_in)
+7 downto 0
+PARAMETER_STRING
+USR
+ constraint(q)
+15 downto 0
+PARAMETER_STRING
+USR
+}
 # hierarchies {
-|
+single_port_ram:RAM1
 }
 # macro_sequence
 

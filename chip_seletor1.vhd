@@ -16,7 +16,7 @@ entity chip_seletor is
 		-- REGISTRADOR A(1-BIT) e PORTA DE E/S(16-BITS)
 		REG_A		 : in std_logic;
 		ES	   	 : in std_logic_vector(15 downto 0);
-		r_a, r_es : in std_logic;
+		r_a, r_es : in std_logic := '0';
 		clk 		 : in std_logic;
 		A		    : out std_logic_vector(15 downto 0) 
 		
@@ -33,20 +33,25 @@ begin
 
 	
 	entry <= r_a & r_es;
+	out_array(0) <= REG_A;
+	
+	A <= ES when entry = "01" else
+		  out_array when entry = "10" else 
+		  (others => '0');
 
-	process(clk)
-	begin 
+	--process(clk)
+	--begin 
 
-		if(rising_edge(clk)) then
-			case entry is
-				when "10" => out_array <= ES;
-				when "01" => out_array(0) <= REG_A;
-				when others => out_array <= (others => '0');
-			end case;
-		end if;
+	--	if(rising_edge(clk)) then
+	--		case entry is
+	--			when "01" => out_array <= ES;
+	--			when "10" => out_array(0) <= REG_A;
+	--			when others => out_array <= (others => '0');
+	--		end case;
+	--	end if;
 
-	end process;
+	--end process;
 
-	A <= out_array;
+	--A <= out_array;
 
 end selec;

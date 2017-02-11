@@ -4,8 +4,8 @@ use ieee.std_logic_1164.all;
 entity porta_es is 
 
 	port(clk, RD_ES, WR_ES : in std_logic;
-		  I : buffer std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
-		  D : out std_logic_vector(15 downto 0); -- 20 bits on the scheme
+		  I : in std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
+		  D : buffer std_logic_vector(15 downto 0); -- 20 bits on the scheme
 		  DATA_IN : in std_logic_vector(15 downto 0); -- entrada de dados (n estamos usando tri-state)
 		  ADDR : in std_logic_vector(7 downto 0);
 		  Q : buffer std_logic_vector(9 downto 0) -- saidas do sistema
@@ -18,13 +18,13 @@ architecture es of porta_es is
 		
 		signal entry: std_logic_vector(1 downto 0);
 		
-		
 	 	subtype word_t is std_logic_vector(15 downto 0);
 		type mem is array(9 downto 0) of word_t;	
 		signal keys : mem := (others => (others => '0'));
 		signal counter : integer range 0 to 10 := 0;
 
 begin
+
 
 		keys(0)(0)  <= I(0);
 	   keys(1)(0)	<= I(1);
@@ -43,12 +43,20 @@ begin
 		begin
 			if(rising_edge(clk)) then
 				case entry is
-					when "10" => if(counter > 9) then
-											counter <= 0;
-									 else 
-											D <= keys(counter);
-											counter <= counter + 1;
-									 end if;
+					when "10" =>
+								   		case ADDR is
+												when "00000000" => D <= keys(0);
+												when "00000001" => D <= keys(1);
+												when "00000010" => D <= keys(2);
+												when "00000011" => D <= keys(3);
+												when "00000100" => D <= keys(4);
+												when "00000101" => D <= keys(5);
+												when "00000110" => D <= keys(6);
+												when "00000111" => D <= keys(7);
+												when "00001000" => D <= keys(8);
+												when "00001001" => D <= keys(9);
+												when others => D <= (others => '0');
+											end case;
 									 
 			      when "01" => if(counter > 9) then
 											counter <= 0;

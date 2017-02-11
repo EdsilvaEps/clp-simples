@@ -9,7 +9,7 @@ entity registrador_enderecamento is
 	(
 		-- REGISTRADOR DE ENDEREAMENTO DE MEMORIA (MAR)
 		IR, P	: in std_logic_vector(7 downto 0);
-		t_pc, t_ir, z_mar, i_mar : in std_logic;
+		t_pc, t_ir, z_mar, i_mar : in std_logic := '0';
 		clk 	: in std_logic;
 		A	: out std_logic_vector(7 downto 0) 
 		

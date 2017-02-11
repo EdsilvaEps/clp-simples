@@ -32,7 +32,7 @@ entity clp_simples is
 		E: BUFFER std_logic;-- can be OUT if an internai sigr.al is sreated 
 		DB: OUT std_logic_VECTOR(7 DOWNTO 0);
 	 
-		m_I : buffer std_logic_vector(9 downto 0);
+		m_I : in std_logic_vector(9 downto 0);
 		Q : buffer std_logic_vector(9 downto 0);
 		sw  : in std_logic_vector(1 downto 0);
 		m_rx  : in std_logic;
@@ -281,7 +281,7 @@ architecture clp of clp_simples is
 		port(
 		  -- PORTAS DE ENTRADA E SAIDA
 		  clk, RD_ES, WR_ES : in std_logic;
-		  I : buffer std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
+		  I : in std_logic_vector(9 downto 0) := "0000000000"; -- entradas do sistema
 		  D : out std_logic_vector(15 downto 0); -- 20 bits on the scheme
 		  DATA_IN : in std_logic_vector(15 downto 0); -- entrada de dados (n estamos usando tri-state)
 		  ADDR : in std_logic_vector(7 downto 0);
@@ -334,7 +334,7 @@ architecture clp of clp_simples is
 	signal P_BUS  : std_logic_vector(7 downto 0)  := "00000000";			-- barramento de enderaameno PC -> MAR
 	signal A_BUS  : std_logic_vector(7 downto 0)  := "00000000";			-- barramento de endereamento MAR -> RAM
 	signal D_BUS  : std_logic_vector(15 downto 0) := "0000000000000000"; -- barramento de dados da RAM
-	signal ES_BUS : std_logic_vector(15 downto 0) := "0000000000000000"; -- barramento de E/S
+	signal ES_BUS : std_logic_vector(15 downto 0) ; -- barramento de E/S
 	signal DATA	  : std_logic_vector(15 downto 0) := "0000000000000000";	-- CHIP SELETOR -> RAM
 	signal M_Z_PC, M_I_PC, M_T_PC, M_T_IR, M_T_BUS, M_R_M, M_W_M, M_Z_MAR, M_I_MAR : std_logic := '0'; -- sinais de controle
 	signal M_R_A, M_W_A, M_Z_A : std_logic := '0'; -- sinais de controle (nao utilizados no modulo de busca)
@@ -487,6 +487,16 @@ begin
 														  START => M_START,
 														  RX => mrx_btn
 	);
+	
+	PES1 : porta_es port map(clk => mclk,
+									 RD_ES => M_RD_ES,
+									 WR_ES => M_WR_ES,
+									 I => m_I,
+									 D => ES_BUS,	
+									 DATA_IN => D_BUS,
+									 ADDR => A_BUS,
+									 Q => Q
+	);
 													 
 													 
 		
@@ -521,15 +531,7 @@ begin
 	
 	
 	
-	PES1 : porta_es port map(clk => mclk,
-									 RD_ES => M_RD_ES,
-									 WR_ES => M_WR_ES,
-									 I => m_I,
-									 D => ES_BUS,	
-									 DATA_IN => D_BUS,
-									 ADDR => A_BUS,
-									 Q => Q
-	);
+	
 	
 	DELAY1 : scan_delay port map(start => M_START,
 									  clk => mclk,
